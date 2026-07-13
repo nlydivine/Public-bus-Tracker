@@ -18,13 +18,13 @@
 
 
 
-\- schema.sql - Creates the database and tables.
+\- `schema.sql` - Creates the database and tables.
 
-\- sample\_data.sql - Inserts sample records.
+\- `sample\_data.sql` - Inserts sample records.
 
-\- queries.sql - Demonstrates SQL queries used by the application.
+\- `queries.sql` - Demonstrates SQL queries used by the application.
 
-\- indexes.sql - Creates indexes for performance optimization.
+\- `indexes.sql` - Creates indexes for performance optimization.
 
 
 
