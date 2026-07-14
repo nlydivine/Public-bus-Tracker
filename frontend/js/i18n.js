@@ -1,12 +1,6 @@
 /**
  * Used by index.html and app.html. The Static page text is translated by
  * tagging the elements with data-i18n="section.key" and chainging the  textContent.
- * Dynamic text built inside app.js (route names, fare messages, stop
- * descriptions) reads TRANSLATIONS[currentLang] directly — see app.js.
- *
- * NOTE: the Kinyarwanda strings below are a best-effort draft, not a
- * verified translation. Please have a Kinyarwanda speaker on the team
- * review them before this goes in front of real users.
  */
 
 const TRANSLATIONS = {
@@ -161,8 +155,7 @@ function setLanguage(lang) {
   currentLang = lang;
   localStorage.setItem("transitx-lang", lang);
   applyStaticTranslations(lang);
-  // app.js hooks into this to re-render dynamic content (route names,
-  // stop dropdowns, fare messages) when the language changes.
+  // app.js hooks into this to render dynamic content anytime  the language changes.
   if (typeof window.onLanguageChange === "function") {
     window.onLanguageChange(lang);
   }
