@@ -50,8 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const originSelect = document.getElementById("originSelect");
   const destSelect = document.getElementById("destSelect");
 
-  // app.js is shared with index.html via the same folder; skip on pages
-  // that don't have the dashboard's form controls.
   if (!originSelect || !destSelect) return;
 
   populateStopOptions(originSelect, 0);

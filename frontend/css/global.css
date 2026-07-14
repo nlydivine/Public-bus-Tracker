@@ -1,9 +1,13 @@
 /* ==========================================================================
+   Glboal css 
+   ========================================================================== */
+/*  */
+/* ==========================================================================
    TransitX Unified Design System
    ========================================================================== */
 
 :root {
-  --transit-green: #075E3D;   /* Primary Accent color */
+  --transit-green: #080c86;   /* Primary Accent color */
   --transit-red: #D12229;     /* Secondary Warning/Alert color */
   --bg-main: #F5F4F0;         /* Soft warm grey background canvas */
   --bg-card: #FFFFFF;         /* Crisp white panel backdrops */
@@ -252,6 +256,40 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Language toggle — sits next to the badge pill in the header */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(28, 27, 24, 0.05);
+  border-radius: 9999px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.lang-option {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 5px 12px;
+  border-radius: 9999px;
+  transition: all 0.15s ease;
+}
+
+.lang-option.is-active {
+  background: var(--bg-card);
+  color: var(--transit-green);
+  box-shadow: 0 1px 3px rgba(28, 27, 24, 0.08);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 @keyframes pulseMarker {

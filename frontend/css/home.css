@@ -17,9 +17,15 @@
   margin-bottom: 48px;
 }
 
+.home-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
 .home-header .badge-status {
   display: inline-block;
-  margin-bottom: 20px;
 }
 
 .home-wordmark {
