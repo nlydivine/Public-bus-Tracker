@@ -1,21 +1,20 @@
 const express = require('express');
 const router = express.Router();
-
-const routes = [
-    { id: 1, routeName: 'Nyabugogo - Kacyiru', stops: ['Nyabugogo', 'Kimironko', 'Kacyiru'], distance: 8.5, duration: 30 },
-    { id: 2, routeName: 'Nyabugogo - Remera', stops: ['Nyabugogo', 'Kanombe', 'Remera'], distance: 10.2, duration: 35 },
-    { id: 3, routeName: 'Nyabugogo - Downtown', stops: ['Nyabugogo', 'Sonatube', 'Rwandex', 'Downtown'], distance: 5.0, duration: 20 },
-    { id: 4, routeName: 'Kabuga - Downtown', stops: ['Kabuga', 'Kanombe', 'Remera', 'Sonatube', 'Rwandex', 'Downtown'], distance: 15.3, duration: 50 }
-];
+const db = require('../db');
 
 router.get('/', (req, res) => {
-    res.json(routes);
+    db.query('SELECT * FROM bus', (err, results) => {
+        if (err) return res.status(500).json({ message: err.message });
+        res.json(results);
+    });
 });
 
 router.get('/:id', (req, res) => {
-    const route = routes.find(r => r.id === parseInt(req.params.id));
-    if (!route) return res.status(404).json({ message: 'Route not found' });
-    res.json(route);
+    db.query('SELECT * FROM bus WHERE bus_id = ?', [req.params.id], (err, results) => {
+        if (err) return res.status(500).json({ message: err.message });
+        if (results.length === 0) return res.status(404).json({ message: 'Bus not found' });
+        res.json(results[0]);
+    });
 });
 
 module.exports = router;
