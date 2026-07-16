@@ -1,4 +1,4 @@
-// GPS Geolocation Integration
+// GPS Geolocation Integration with Leaflet
 
 function getUserLocation() {
     if (!navigator.geolocation) {
@@ -7,27 +7,29 @@ function getUserLocation() {
     }
 
     navigator.geolocation.getCurrentPosition(
-        function(position) {
+        function (position) {
+
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
 
             console.log("Latitude:", latitude);
             console.log("Longitude:", longitude);
 
-            // Display coordinates if these elements exist
-            const latElement = document.getElementById("latitude");
-            const lngElement = document.getElementById("longitude");
-
-            if (latElement) latElement.textContent = latitude;
-            if (lngElement) lngElement.textContent = longitude;
-
-            // Save coordinates in local storage
+            // Save location
             localStorage.setItem("latitude", latitude);
             localStorage.setItem("longitude", longitude);
 
-            // TODO: Connect this to your map or backend API
+            // Move the map to the user's location
+            map.setView([latitude, longitude], 16);
+
+            // Add a marker
+            L.marker([latitude, longitude])
+                .addTo(map)
+                .bindPopup("You are here")
+                .openPopup();
         },
-        function(error) {
+
+        function (error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
                     alert("Location permission denied.");
@@ -39,9 +41,10 @@ function getUserLocation() {
                     alert("Location request timed out.");
                     break;
                 default:
-                    alert("An unknown error occurred.");
+                    alert("Unknown error.");
             }
         },
+
         {
             enableHighAccuracy: true,
             timeout: 10000,
@@ -50,18 +53,15 @@ function getUserLocation() {
     );
 }
 
-// Live GPS tracking
 function startTracking() {
-    if (!navigator.geolocation) return;
+    navigator.geolocation.watchPosition(function (position) {
 
-    navigator.geolocation.watchPosition(function(position) {
-        console.log(
-            "Updated Location:",
-            position.coords.latitude,
-            position.coords.longitude
-        );
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        map.setView([latitude, longitude]);
+
     });
 }
 
-// Start GPS automatically
 getUserLocation();
