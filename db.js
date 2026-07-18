@@ -1,20 +1,30 @@
-const mysql = require('mysql2');
+/**
+ * ==========================================================
+ * Kigali Public Transport Tracker
+ * MySQL Database Configuration
+ * ==========================================================
+ */
+
+const mysql = require("mysql2");
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'public_transport_tracker',
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "public_transport_tracker",
     port: 3306
 });
 
+
 db.connect((err) => {
     if (err) {
-        console.log('Database connection failed: ' + err.message);
+        console.error("❌ MySQL connection failed:");
+        console.error(err);
         return;
     }
-    console.log('Connected to database successfully');
+
+    console.log("✅ MySQL Database Connected Successfully");
 });
 
-module.exports = db;
 
+module.exports = db;
