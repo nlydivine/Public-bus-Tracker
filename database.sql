@@ -1,73 +1,56 @@
 IF DB_ID('public_transport_tracker') IS NULL
-    CREATE DATABASE public_transport_tracker;
-GO
+CREATE DATABASE public_transport_tracker;
+
 USE public_transport_tracker;
-GO
+
 
 CREATE TABLE bus (
-    bus_id INT IDENTITY(1,1) PRIMARY KEY,
+    bus_id INT AUTO_INCREMENT PRIMARY KEY,
     bus_number VARCHAR(20),
     license_plate VARCHAR(20),
     capacity INT,
     status VARCHAR(20),
     operator VARCHAR(50),
-    created_at DATETIME DEFAULT GETDATE()
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
 CREATE TABLE route (
-    route_id INT IDENTITY(1,1) PRIMARY KEY,
+    route_id INT AUTO_INCREMENT PRIMARY KEY,
     route_name VARCHAR(100),
     start_point VARCHAR(100),
     end_point VARCHAR(100),
     distance DECIMAL(5,2),
     route_type VARCHAR(50),
     status VARCHAR(20),
-    created_at DATETIME DEFAULT GETDATE()
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
 CREATE TABLE stop (
-    stop_id INT IDENTITY(1,1) PRIMARY KEY,
+    stop_id INT AUTO_INCREMENT PRIMARY KEY,
     stop_name VARCHAR(100),
     latitude DECIMAL(10,6),
     longitude DECIMAL(10,6),
     district VARCHAR(50),
-    is_terminal BIT,
-    created_at DATETIME DEFAULT GETDATE()
+    is_terminal BOOLEAN,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE route_stop (
-    route_stop_id INT IDENTITY(1,1) PRIMARY KEY,
-    route_id INT,
-    stop_id INT,
-    stop_order INT,
-    estimated_time INT,
-    FOREIGN KEY (route_id) REFERENCES route(route_id),
-    FOREIGN KEY (stop_id) REFERENCES stop(stop_id)
-);
-
-CREATE TABLE trip (
-    trip_id INT IDENTITY(1,1) PRIMARY KEY,
-    bus_id INT,
-    route_id INT,
-    start_time DATETIME,
-    end_time DATETIME,
-    status VARCHAR(20),
-    created_at DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (bus_id) REFERENCES bus(bus_id),
-    FOREIGN KEY (route_id) REFERENCES route(route_id)
-);
 
 CREATE TABLE bus_location (
-    location_id INT IDENTITY(1,1) PRIMARY KEY,
+    location_id INT AUTO_INCREMENT PRIMARY KEY,
     bus_id INT,
     trip_id INT,
     latitude DECIMAL(10,6),
     longitude DECIMAL(10,6),
     speed DECIMAL(5,2),
-    recorded_at DATETIME DEFAULT GETDATE(),
-    FOREIGN KEY (bus_id) REFERENCES bus(bus_id),
-    FOREIGN KEY (trip_id) REFERENCES trip(trip_id)
+    recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(bus_id)
+    REFERENCES bus(bus_id)
 );
+
 
 INSERT INTO bus (bus_number, license_plate, capacity, status, operator) VALUES
 ('RAB-001A', 'RAD123A', 70, 'Active', 'Kigali Bus Services'),
