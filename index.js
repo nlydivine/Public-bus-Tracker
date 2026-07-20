@@ -1,31 +1,32 @@
-const express = require('express');
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
+
 const app = express();
 
-const busRoutes = require('./routes/buses');
-const routeRoutes = require('./routes/routes');
-const fareRoutes = require('./routes/fares');
-const gpsRoutes = require('./routes/gps');
-const ussdRoutes = require('./routes/ussd');
-
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// API Routes
+app.use("/api/buses", require("./routes/buses"));
+app.use("/api/routes", require("./routes/routes"));
+app.use("/api/fares", require("./routes/fares"));
+app.use("/api/gps", require("./routes/gps"));
+app.use("/api/ussd", require("./routes/ussd"));
 
-app.use('/api/buses', busRoutes);
-app.use('/api/routes', routeRoutes);
-app.use('/api/fares', fareRoutes);
-app.use('/api/gps', gpsRoutes);
-app.use('/api/ussd', ussdRoutes);
+// Serve frontend
+app.use(express.static(path.join(__dirname, "frontend")));
 
-
-app.get('/', (req,res)=>{
-    res.json({
-        message:"Kigali Public Transport Tracker API is running"
-    });
+// Home Page
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
 
+const PORT = 3000;
 
-app.listen(3000,()=>{
-    console.log("Server is running on port 3000");
+app.listen(PORT, () => {
+    console.log("==================================");
+    console.log(`Server running at http://localhost:${PORT}`);
+    console.log("==================================");
 });

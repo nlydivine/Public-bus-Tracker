@@ -50,7 +50,63 @@ CREATE TABLE bus_location (
     FOREIGN KEY(bus_id)
     REFERENCES bus(bus_id)
 );
+ALTER TABLE bus_location
+ADD heading DECIMAL(6,2),
+ADD accuracy DECIMAL(6,2);
 
+CREATE TABLE route_stop (
+    route_stop_id INT AUTO_INCREMENT PRIMARY KEY,
+    route_id INT NOT NULL,
+    stop_id INT NOT NULL,
+    stop_order INT NOT NULL,
+    estimated_time INT,
+
+    FOREIGN KEY (route_id) REFERENCES route(route_id),
+    FOREIGN KEY (stop_id) REFERENCES stop(stop_id)
+);
+CREATE TABLE fare (
+    fare_id INT AUTO_INCREMENT PRIMARY KEY,
+    route_id INT NOT NULL,
+    amount DECIMAL(8,2),
+    payment_method VARCHAR(50),
+
+    FOREIGN KEY(route_id)
+    REFERENCES route(route_id)
+);
+
+CREATE TABLE driver (
+    driver_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    full_name VARCHAR(100),
+
+    phone VARCHAR(20),
+
+    password VARCHAR(255),
+
+    status VARCHAR(20) DEFAULT 'Active'
+);
+
+CREATE TABLE trip (
+    trip_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    bus_id INT,
+
+    driver_id INT,
+
+    route_id INT,
+
+    start_time DATETIME,
+
+    end_time DATETIME,
+
+    status VARCHAR(20),
+
+    FOREIGN KEY(bus_id) REFERENCES bus(bus_id),
+
+    FOREIGN KEY(driver_id) REFERENCES driver(driver_id),
+
+    FOREIGN KEY(route_id) REFERENCES route(route_id)
+);
 
 INSERT INTO bus (bus_number, license_plate, capacity, status, operator) VALUES
 ('RAB-001A', 'RAD123A', 70, 'Active', 'Kigali Bus Services'),
@@ -74,3 +130,9 @@ INSERT INTO route_stop (route_id, stop_id, stop_order, estimated_time) VALUES
 (1, 1, 1, 0),(1, 2, 2, 15),(1, 3, 3, 30),
 (2, 1, 1, 0),(2, 4, 2, 35),
 (3, 5, 1, 0),(3, 6, 2, 50);
+
+INSERT INTO fare(route_id, amount, payment_method)
+VALUES
+(1,500,'Tap&Go'),
+(2,500,'Tap&Go'),
+(3,700,'Tap&Go');
