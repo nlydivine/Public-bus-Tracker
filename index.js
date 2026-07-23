@@ -9,7 +9,7 @@ const ussdRoutes = require('./routes/ussd');
 
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.static('frontend'));
 
 
 app.use('/api/buses', busRoutes);
@@ -29,3 +29,4 @@ app.get('/', (req,res)=>{
 app.listen(3000,()=>{
     console.log("Server is running on port 3000");
 });
+
