@@ -2,36 +2,34 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-console.log("gps.js loaded");
-
-// Get latest GPS location
-
+// Get all GPS locations, latest first
 router.get("/", (req, res) => {
-
     const sql = `
-        SELECT *
+        SELECT
+            bus_location.*,
+            bus.bus_number,
+            bus.license_plate,
+            bus.status
         FROM bus_location
-        ORDER BY recorded_at DESC
+        LEFT JOIN bus
+            ON bus.bus_id = bus_location.bus_id
+        ORDER BY bus_location.recorded_at DESC
     `;
 
-    db.query(sql, (err, result) => {
-
+    db.query(sql, (err, results) => {
         if (err) {
             return res.status(500).json({
                 error: err.message
             });
         }
 
-        res.json(result);
-
+        res.json(results);
     });
-
 });
 
-router.get("/:bus_id", (req,res)=>{
-
+// Get latest GPS location for one bus
+router.get("/:bus_id", (req, res) => {
     const busId = req.params.bus_id;
-
 
     const sql = `
         SELECT *
@@ -41,89 +39,62 @@ router.get("/:bus_id", (req,res)=>{
         LIMIT 1
     `;
 
-
-    db.query(sql,[busId],(err,result)=>{
-
-
-        if(err){
+    db.query(sql, [busId], (err, results) => {
+        if (err) {
             return res.status(500).json({
-                error:err.message
+                error: err.message
             });
         }
 
-
-        if(result.length === 0){
-
+        if (results.length === 0) {
             return res.status(404).json({
-                message:"No GPS data found"
+                message: "No GPS data found"
             });
-
         }
 
-
-        res.json(result[0]);
-
+        res.json(results[0]);
     });
-
 });
-
-
 
 // Save GPS location
+router.post("/", (req, res) => {
+    const {
+        bus_id,
+        trip_id = null,
+        latitude,
+        longitude,
+        speed = 0
+    } = req.body;
 
-router.post("/",(req,res)=>{
+    if (!bus_id || latitude === undefined || longitude === undefined) {
+        return res.status(400).json({
+            message: "bus_id, latitude and longitude are required"
+        });
+    }
 
+    const sql = `
+        INSERT INTO bus_location
+            (bus_id, trip_id, latitude, longitude, speed)
+        VALUES
+            (?, ?, ?, ?, ?)
+    `;
 
-const {
-    bus_id,
-    latitude,
-    longitude,
-    speed
-}=req.body;
+    db.query(
+        sql,
+        [bus_id, trip_id, latitude, longitude, speed],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
 
-
-
-const sql = `
-INSERT INTO bus_location
-(bus_id, latitude, longitude, speed)
-VALUES (?,?,?,?)
-`;
-
-
-
-db.query(
-sql,
-[
-bus_id,
-latitude,
-longitude,
-speed
-],
-
-(err,result)=>{
-
-
-if(err){
-
-return res.status(500).json({
-error:err.message
+            res.status(201).json({
+                message: "GPS location saved",
+                location_id: result.insertId
+            });
+        }
+    );
 });
-
-}
-
-
-res.json({
-
-message:"GPS location saved",
-id:result.insertId
-
-});
-
-
-});
-
-
-});
-
 
 module.exports = router;
