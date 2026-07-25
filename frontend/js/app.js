@@ -1,8 +1,17 @@
 const API = "http://localhost:3000/api";
 
+const FARE_PER_KM = 50;
+
 let stops = [];
 let routes = [];
 let fares = [];
+let gpsLocations = [];
+
+let transitMap = null;
+let stopMarkers = [];
+let busMarkers = [];
+let selectedTripLine = null;
+let selectedTripMarkers = [];
 
 async function fetchJSON(url) {
     const response = await fetch(url);
@@ -15,15 +24,17 @@ async function fetchJSON(url) {
 }
 
 async function loadData() {
-    const [stopsRes, routesRes, faresRes] = await Promise.all([
-        fetchJSON(`${API}/routes/1/stops`),
+    const [stopsRes, routesRes, faresRes, gpsRes] = await Promise.all([
+        fetchJSON(`${API}/stops`),
         fetchJSON(`${API}/routes`),
-        fetchJSON(`${API}/fares`)
+        fetchJSON(`${API}/fares`),
+        fetchJSON(`${API}/gps`).catch(() => [])
     ]);
 
     stops = stopsRes;
     routes = routesRes;
     fares = faresRes;
+    gpsLocations = Array.isArray(gpsRes) ? gpsRes : [];
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -46,10 +57,20 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (index === Math.min(1, stops.length - 1)) destinationOption.selected = true;
         });
 
+        initializeMap();
+
+        setTimeout(() => {
+            if (transitMap) {
+                transitMap.invalidateSize(true);
+            }
+
+            renderStopMarkers();
+            renderBusMarkers();
+            updateDashboard();
+        }, 350);
+
         originSelect.addEventListener("change", updateDashboard);
         destSelect.addEventListener("change", updateDashboard);
-
-        updateDashboard();
     } catch (error) {
         console.error(error);
 
@@ -62,6 +83,131 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (routeNameOutput) routeNameOutput.textContent = "Start the server and import the database";
     }
 });
+
+function initializeMap() {
+    const mapElement = document.getElementById("transitMap");
+
+    if (!mapElement || typeof L === "undefined") return;
+
+    transitMap = L.map("transitMap", {
+        zoomControl: true,
+        scrollWheelZoom: true,
+        preferCanvas: true
+    }).setView([-1.9441, 30.0619], 12);
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(transitMap);
+
+    transitMap.whenReady(() => {
+        setTimeout(() => {
+            transitMap.invalidateSize(true);
+        }, 300);
+    });
+
+    if (typeof ResizeObserver !== "undefined") {
+        const resizeObserver = new ResizeObserver(() => {
+            if (transitMap) {
+                transitMap.invalidateSize(true);
+            }
+        });
+
+        resizeObserver.observe(mapElement);
+    }
+
+    window.addEventListener("resize", () => {
+        if (transitMap) {
+            transitMap.invalidateSize(true);
+        }
+    });
+}
+
+function renderStopMarkers() {
+    if (!transitMap) return;
+
+    stopMarkers.forEach((marker) => marker.remove());
+    stopMarkers = [];
+
+    const validStops = stops.filter(hasValidCoordinates);
+
+    validStops.forEach((stop) => {
+        const isTerminal = isTerminalStop(stop);
+
+        const marker = L.circleMarker(
+            [Number(stop.latitude), Number(stop.longitude)],
+            {
+                radius: isTerminal ? 8 : 6,
+                color: isTerminal ? "#D12229" : "#080c86",
+                fillColor: isTerminal ? "#D12229" : "#080c86",
+                fillOpacity: 0.95,
+                weight: 3
+            }
+        )
+            .addTo(transitMap)
+            .bindPopup(`
+                <strong>${stop.stop_name}</strong><br>
+                District: ${stop.district || "Unknown"}<br>
+                ${isTerminal ? "Terminal stop" : "Bus stop"}
+            `);
+
+        stopMarkers.push(marker);
+    });
+
+    if (validStops.length > 0) {
+        const bounds = L.latLngBounds(
+            validStops.map((stop) => [Number(stop.latitude), Number(stop.longitude)])
+        );
+
+        transitMap.fitBounds(bounds, {
+            padding: [24, 24]
+        });
+    }
+}
+
+function renderBusMarkers() {
+    if (!transitMap) return;
+
+    busMarkers.forEach((marker) => marker.remove());
+    busMarkers = [];
+
+    const latestByBus = new Map();
+
+    gpsLocations.forEach((location) => {
+        const busId = location.bus_id;
+
+        if (!latestByBus.has(busId)) {
+            latestByBus.set(busId, location);
+        }
+    });
+
+    latestByBus.forEach((location) => {
+        if (!hasValidCoordinates(location)) return;
+
+        const busIcon = L.divIcon({
+            html: "🚌",
+            className: "bus-map-icon",
+            iconSize: [28, 28],
+            iconAnchor: [14, 14]
+        });
+
+        const marker = L.marker(
+            [Number(location.latitude), Number(location.longitude)],
+            {
+                icon: busIcon,
+                zIndexOffset: 900
+            }
+        )
+            .addTo(transitMap)
+            .bindPopup(`
+                <strong>${location.bus_number || `Bus ${location.bus_id}`}</strong><br>
+                Speed: ${location.speed || 0} km/h<br>
+                Updated: ${location.recorded_at || "Unknown"}
+            `);
+
+        busMarkers.push(marker);
+    });
+}
 
 function updateDashboard() {
     const originSelect = document.getElementById("originSelect");
@@ -81,29 +227,53 @@ function updateDashboard() {
     const destId = destSelect.value;
 
     if (originId === destId) {
-        fareOutput.textContent = "Pick two different stops";
-        distanceOutput.textContent = "0";
-        routeNameOutput.textContent = "Origin and destination must differ";
+        if (fareOutput) fareOutput.textContent = "Pick two different stops";
+        if (distanceOutput) distanceOutput.textContent = "0";
+        if (routeNameOutput) routeNameOutput.textContent = "Origin and destination must differ";
 
         if (timelineContainer) {
             timelineContainer.innerHTML = "";
         }
 
+        clearSelectedTripOnMap();
+
         return;
     }
 
-    const defaultFare = fares[0];
+    const originStop = stops.find((stop) => String(stop.stop_id) === String(originId));
+    const destinationStop = stops.find((stop) => String(stop.stop_id) === String(destId));
 
-    if (!defaultFare) {
-        fareOutput.textContent = "No fare data";
-        distanceOutput.textContent = "0";
-        routeNameOutput.textContent = "No route data available";
+    if (!originStop || !destinationStop || !hasValidCoordinates(originStop) || !hasValidCoordinates(destinationStop)) {
+        if (fareOutput) fareOutput.textContent = "Unavailable";
+        if (distanceOutput) distanceOutput.textContent = "0";
+        if (routeNameOutput) routeNameOutput.textContent = "Missing stop coordinates";
+        clearSelectedTripOnMap();
         return;
     }
 
-    fareOutput.textContent = `${defaultFare.fare} RWF`;
-    distanceOutput.textContent = `${defaultFare.distance} km`;
-    routeNameOutput.textContent = defaultFare.route_name;
+    const selectedDistance = calculateDistanceKm(
+        Number(originStop.latitude),
+        Number(originStop.longitude),
+        Number(destinationStop.latitude),
+        Number(destinationStop.longitude)
+    );
+
+    const selectedFare = calculateFare(selectedDistance);
+    const matchingRoute = findMatchingRoute(originStop, destinationStop);
+
+    if (fareOutput) {
+        fareOutput.textContent = `${selectedFare} RWF`;
+    }
+
+    if (distanceOutput) {
+        distanceOutput.textContent = selectedDistance.toFixed(2);
+    }
+
+    if (routeNameOutput) {
+        routeNameOutput.textContent = matchingRoute
+            ? matchingRoute.route_name
+            : "Estimated direct trip";
+    }
 
     if (firstRunOutput) {
         firstRunOutput.textContent = "6:00 AM";
@@ -114,22 +284,168 @@ function updateDashboard() {
     }
 
     if (mapPlaceholderText) {
-        mapPlaceholderText.textContent = `${originSelect.options[originSelect.selectedIndex].text} → ${destSelect.options[destSelect.selectedIndex].text}`;
+        mapPlaceholderText.textContent = `${originStop.stop_name} → ${destinationStop.stop_name}`;
     }
 
     if (timelineContainer) {
         timelineContainer.innerHTML = "";
 
-        const originName = originSelect.options[originSelect.selectedIndex].text;
-        const destName = destSelect.options[destSelect.selectedIndex].text;
-
-        [originName, destName].forEach((name, index) => {
+        [originStop.stop_name, destinationStop.stop_name].forEach((name, index) => {
             const item = document.createElement("div");
             item.className = `timeline-node-item ${index === 0 ? "node-active" : ""}`;
             item.innerHTML = `<strong>${name}</strong>`;
             timelineContainer.appendChild(item);
         });
     }
+
+    updateSelectedTripOnMap(originStop, destinationStop);
+}
+
+function updateSelectedTripOnMap(originStop, destinationStop) {
+    if (!transitMap) return;
+
+    clearSelectedTripOnMap();
+
+    const originLatLng = [
+        Number(originStop.latitude),
+        Number(originStop.longitude)
+    ];
+
+    const destinationLatLng = [
+        Number(destinationStop.latitude),
+        Number(destinationStop.longitude)
+    ];
+
+    transitMap.invalidateSize(true);
+
+    selectedTripLine = L.polyline(
+        [originLatLng, destinationLatLng],
+        {
+            color: "#D12229",
+            weight: 7,
+            opacity: 1,
+            dashArray: null
+        }
+    ).addTo(transitMap);
+
+    selectedTripLine.bringToFront();
+
+    const originIcon = L.divIcon({
+        html: "A",
+        className: "selected-stop-icon",
+        iconSize: [34, 34],
+        iconAnchor: [17, 17]
+    });
+
+    const destinationIcon = L.divIcon({
+        html: "B",
+        className: "selected-stop-icon destination",
+        iconSize: [34, 34],
+        iconAnchor: [17, 17]
+    });
+
+    const originMarker = L.marker(originLatLng, {
+        icon: originIcon,
+        zIndexOffset: 2000
+    })
+        .addTo(transitMap)
+        .bindPopup(`<strong>Origin</strong><br>${originStop.stop_name}`);
+
+    const destinationMarker = L.marker(destinationLatLng, {
+        icon: destinationIcon,
+        zIndexOffset: 2000
+    })
+        .addTo(transitMap)
+        .bindPopup(`<strong>Destination</strong><br>${destinationStop.stop_name}`);
+
+    selectedTripMarkers.push(originMarker, destinationMarker);
+
+    const bounds = L.latLngBounds([originLatLng, destinationLatLng]);
+
+    setTimeout(() => {
+        transitMap.invalidateSize(true);
+
+        transitMap.fitBounds(bounds, {
+            padding: [80, 80],
+            maxZoom: 14
+        });
+
+        selectedTripLine.bringToFront();
+    }, 150);
+}
+
+function clearSelectedTripOnMap() {
+    if (selectedTripLine) {
+        selectedTripLine.remove();
+        selectedTripLine = null;
+    }
+
+    selectedTripMarkers.forEach((marker) => marker.remove());
+    selectedTripMarkers = [];
+}
+
+function calculateDistanceKm(lat1, lon1, lat2, lon2) {
+    const earthRadiusKm = 6371;
+
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
+
+    const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(dLon / 2) ** 2;
+
+    return earthRadiusKm * 2 * Math.atan2(
+        Math.sqrt(a),
+        Math.sqrt(1 - a)
+    );
+}
+
+function calculateFare(distanceKm) {
+    const minimumFare = 300;
+    const calculatedFare = Math.round(distanceKm * FARE_PER_KM);
+
+    return Math.max(minimumFare, calculatedFare);
+}
+
+function toRadians(value) {
+    return value * Math.PI / 180;
+}
+
+function hasValidCoordinates(item) {
+    return (
+        item &&
+        item.latitude !== null &&
+        item.longitude !== null &&
+        item.latitude !== undefined &&
+        item.longitude !== undefined &&
+        !Number.isNaN(Number(item.latitude)) &&
+        !Number.isNaN(Number(item.longitude))
+    );
+}
+
+function isTerminalStop(stop) {
+    return stop.is_terminal === true || stop.is_terminal === 1 || stop.is_terminal === "1";
+}
+
+function findMatchingRoute(originStop, destinationStop) {
+    const originName = originStop.stop_name.toLowerCase();
+    const destinationName = destinationStop.stop_name.toLowerCase();
+
+    return routes.find((route) => {
+        const routeName = String(route.route_name || "").toLowerCase();
+        const startPoint = String(route.start_point || "").toLowerCase();
+        const endPoint = String(route.end_point || "").toLowerCase();
+
+        return (
+            routeName.includes(originName.split(" ")[0]) &&
+            routeName.includes(destinationName.split(" ")[0])
+        ) || (
+            startPoint.includes(originName.split(" ")[0]) &&
+            endPoint.includes(destinationName.split(" ")[0])
+        );
+    });
 }
 
 function selectQuickRoute(originName, destName) {

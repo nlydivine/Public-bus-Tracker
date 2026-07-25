@@ -10,6 +10,7 @@ const routeRoutes = require("./routes/routes");
 const fareRoutes = require("./routes/fares");
 const gpsRoutes = require("./routes/gps");
 const ussdRoutes = require("./routes/ussd");
+const stopRoutes = require("./routes/stops");
 
 app.use(cors());
 app.use(express.json());
@@ -22,6 +23,7 @@ app.use("/api/routes", routeRoutes);
 app.use("/api/fares", fareRoutes);
 app.use("/api/gps", gpsRoutes);
 app.use("/api/ussd", ussdRoutes);
+app.use("/api/stops", stopRoutes);
 
 app.get("/api", (req, res) => {
     res.json({
