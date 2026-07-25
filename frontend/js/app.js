@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             renderStopMarkers();
             renderBusMarkers();
             updateDashboard();
-        }, 350);
+        }, 1000);  // CHANGED FROM 350 TO 1000ms
 
         originSelect.addEventListener("change", updateDashboard);
         destSelect.addEventListener("change", updateDashboard);
