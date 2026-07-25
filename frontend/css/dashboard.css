@@ -1,0 +1,249 @@
+
+/* ==========================================================================
+   TransitX Dashboard (app.html)
+   Extends global.css — reuses cards, buttons, timeline, and route-line tokens.
+   ========================================================================== */
+
+.logo-link {
+  cursor: pointer;
+}
+
+/* ---- Left panel: trip planner ------------------------------------------ */
+
+.planner-panel {
+  justify-content: space-between;
+  height: fit-content;
+}
+
+.planner-intro {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+  font-weight: 500;
+}
+
+.planner-heading {
+  margin-bottom: 12px;
+}
+
+.quick-links-section {
+  border-top: 1px solid var(--border-ui);
+  padding-top: 24px;
+  margin-top: 16px;
+}
+
+.quick-links-label {
+  margin-bottom: 12px;
+}
+
+.quick-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quick-route-btn {
+  background: none;
+  color: var(--text-main);
+  border: 1px solid var(--border-ui);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 12px 16px;
+}
+
+.quick-route-btn:hover {
+  border-color: var(--transit-green);
+}
+
+/* ---- Right panel: fare + map + schedule -------------------------------- */
+
+.dashboard-detail-panel {
+  gap: 32px;
+}
+
+/* Fare summary */
+
+.fare-summary {
+  background: #FBFBF9;
+  border: 1px solid var(--border-ui);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.fare-value {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--transit-green);
+  letter-spacing: -1px;
+}
+
+.fare-value.is-invalid {
+  color: var(--transit-red);
+  font-size: 22px;
+}
+
+.fare-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.fare-meta strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+/* Map preview */
+
+.map-preview {
+  height: 180px;
+  background: #EBEAE4;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-ui);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.map-preview-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(#D3D1C9 2px, transparent 2px);
+  background-size: 24px 24px;
+  opacity: 0.7;
+}
+
+.map-preview-track {
+  position: absolute;
+  width: 80%;
+  height: 6px;
+  background: #C8C6BE;
+  border-radius: 99px;
+  transform: rotate(-8deg);
+}
+
+.map-preview-marker {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background: var(--transit-red);
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+  animation: pulseMarker 2s infinite ease-in-out;
+  z-index: 10;
+  transform: translateY(-4px);
+}
+
+.map-preview-marker.is-visible {
+  display: flex;
+}
+
+.map-preview-label {
+  position: relative;
+  z-index: 5;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: 1px solid var(--border-ui);
+}
+
+.map-preview-label.is-hidden {
+  display: none;
+}
+
+.map-preview-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 6;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-ui);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* Schedule */
+
+.schedule-active-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.schedule-route-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.schedule-meta {
+  display: none;
+  gap: 16px;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.schedule-meta.is-visible {
+  display: flex;
+}
+
+.schedule-meta strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.schedule-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+/* Timeline node text (rendered by JS into .route-timeline-stack) */
+
+.timeline-node-item h5 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.timeline-node-item.node-active h5 {
+  color: var(--transit-red);
+}
+
+.timeline-node-item p {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.timeline-empty-message {
+  font-size: 13px;
+  color: var(--transit-red);
+  font-weight: 600;
+}
+#map {
+    height: 450px;
+    width: 100%;
+    display: block;
+}

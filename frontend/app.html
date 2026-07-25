@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TransitX - Trip Dashboard</title>
+
+
+  <link rel="stylesheet" href="css/global.css">
+
+  <link rel="stylesheet" href="css/dashboard.css">
+
+
+  <!-- Leaflet Map CSS -->
+  <link 
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet/dist/leaflet.css"
+/>
+
+
+</head>
+
+
+<body>
+
+
+<div class="app-viewport-wrapper">
+
+
+
+<header class="system-header">
+
+
+<div class="logo-brand logo-link" onclick="window.location.href='index.html'">
+
+Transit<span>X</span>
+
+</div>
+
+
+
+<div class="header-controls">
+
+
+<div class="badge-status">
+
+🟢 Live backend connected
+
+</div>
+
+
+
+<div class="lang-toggle">
+
+<button type="button" class="lang-option">
+EN
+</button>
+
+
+<button type="button" class="lang-option">
+RW
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</header>
+
+
+
+
+
+<main class="split-dashboard-grid">
+
+
+
+
+
+<section class="app-panel-card planner-panel">
+
+
+
+<div>
+
+
+<p class="context-micro-label">
+Plan a trip
+</p>
+
+
+<h2 class="heading-headline planner-heading">
+
+Where are you headed?
+
+</h2>
+
+
+<p class="planner-intro">
+
+Pick a starting stop and a destination to see the fare, route, and schedule.
+
+</p>
+
+
+
+
+
+<div class="input-group-stack">
+
+
+
+<div class="input-wrapper-node">
+
+<span class="input-icon-marker">
+🟢
+</span>
+
+
+<select 
+id="originSelect"
+class="select-menu-input">
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="input-wrapper-node">
+
+
+<span class="input-icon-marker">
+📍
+</span>
+
+
+
+<select 
+id="destSelect"
+class="select-menu-input">
+
+</select>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="quick-links-section">
+
+
+<p class="context-micro-label quick-links-label">
+
+Popular trips
+
+</p>
+
+
+
+
+<div class="quick-links-list">
+
+
+<button 
+class="action-btn-ui quick-route-btn">
+
+ Nyabugogo → Kacyiru
+
+</button>
+
+
+
+
+<button 
+class="action-btn-ui quick-route-btn">
+
+ Kabuga → Downtown
+
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<section class="app-panel-card dashboard-detail-panel">
+
+
+
+
+
+<div class="fare-summary">
+
+
+<p class="context-micro-label">
+
+Estimated fare
+
+</p>
+
+
+
+<h3 
+id="fareOutput"
+class="fare-value">
+
+0 RWF
+
+</h3>
+
+
+
+
+
+<p class="fare-meta">
+
+Distance:
+
+<strong id="distanceOutput">
+0
+</strong>
+
+km
+
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div>
+
+
+<p class="context-micro-label">
+
+Live Bus Tracking
+
+</p>
+
+
+
+<div 
+id="map"
+class="map-container">
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="schedule-section">
+
+
+<div>
+
+
+<p class="schedule-active-label">
+
+Route
+
+</p>
+
+
+
+
+<h4 
+id="routeNameOutput"
+class="schedule-route-name">
+
+Choose a starting stop and destination
+
+</h4>
+
+
+
+
+
+<div 
+id="scheduleMetaRow"
+class="schedule-meta">
+
+
+
+<span>
+
+ First departure:
+
+<strong id="firstRunOutput">
+--
+</strong>
+
+
+</span>
+
+
+
+
+<span>
+
+ Every:
+
+<strong id="frequencyOutput">
+--
+</strong>
+
+
+</span>
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div 
+id="timelineContainer"
+class="route-timeline-stack">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+</section>
+
+
+
+
+</main>
+
+
+
+
+</div>
+
+
+
+
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+<!-- Your Application JS -->
+<script src="js/app.js"></script>
+
+
+
+</body>
+
+
+</html>
