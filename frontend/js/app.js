@@ -1,6 +1,9 @@
 const API = "http://localhost:3000/api";
 
-const FARE_PER_KM = 50;
+// Official RURA tariff (effective April 6, 2026)
+// City of Kigali: 59.28 Frw per passenger per kilometre
+const KIGALI_TARIFF_PER_KM = 59.28;
+const MINIMUM_FARE = 300;
 
 let stops = [];
 let routes = [];
@@ -67,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             renderStopMarkers();
             renderBusMarkers();
             updateDashboard();
-        }, 1000);  // CHANGED FROM 350 TO 1000ms
+        }, 1000);
 
         originSelect.addEventListener("change", updateDashboard);
         destSelect.addEventListener("change", updateDashboard);
@@ -402,11 +405,13 @@ function calculateDistanceKm(lat1, lon1, lat2, lon2) {
     );
 }
 
+// ✅ UPDATED: Official RURA tariff (effective April 6, 2026)
 function calculateFare(distanceKm) {
-    const minimumFare = 300;
-    const calculatedFare = Math.round(distanceKm * FARE_PER_KM);
+    // City of Kigali: 59.28 Frw per passenger per kilometre
+    const calculatedFare = Math.round(distanceKm * KIGALI_TARIFF_PER_KM);
 
-    return Math.max(minimumFare, calculatedFare);
+    // Return the higher of calculated or minimum fare
+    return Math.max(MINIMUM_FARE, calculatedFare);
 }
 
 function toRadians(value) {
