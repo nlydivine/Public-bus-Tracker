@@ -21,7 +21,7 @@ const TRANSLATIONS = {
       footer: "Adhering to Rwanda Law No 058/2021 relating to the Protection of Personal Data and Privacy. Supports anonymous access."
     },
     app: {
-      badge: "Sample data · backend not yet connected",
+      badge: "Live Backend · OpenStreetMap",
       plannerLabel: "Plan a trip",
       plannerHeading: "Where are you headed?",
       plannerIntro: "Pick a starting stop and a destination to see the fare, route, and schedule.",
@@ -34,7 +34,7 @@ const TRANSLATIONS = {
       distanceLabel: "Distance:",
       distanceUnit: "km",
       mapLabel: "Live map preview",
-      mapTag: "Preview only",
+      mapTag: "OpenStreetMap",
       mapDefault: "Choose a trip to preview it here",
       routeLabel: "Route",
       routeDefault: "Choose a starting stop and destination",
@@ -93,7 +93,7 @@ const TRANSLATIONS = {
       distanceLabel: "Intera:",
       distanceUnit: "km",
       mapLabel: "Ikarita (Igerageza)",
-      mapTag: "Kugerageza gusa",
+      mapTag: "OpenStreetMap",
       mapDefault: "Hitamo urugendo kugira ngo urubone hano",
       routeLabel: "Inzira",
       routeDefault: "Hitamo aho utangirira n'aho ugana",
