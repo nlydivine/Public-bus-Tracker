@@ -53,7 +53,7 @@ router.get('/:id', (req, res) => {
     }
 });
 
-// New endpoint: calculate fare for a custom distance
+// Optional: New endpoint for custom distance calculations
 router.post('/calculate', (req, res) => {
     try {
         const { distance } = req.body;
@@ -69,8 +69,7 @@ router.post('/calculate', (req, res) => {
             fare: fare,
             tariff_per_km: KIGALI_TARIFF_PER_KM,
             minimum_fare: MINIMUM_FARE,
-            tariff_type: 'RURA_Kigali_Official',
-            note: 'Tariff effective April 6, 2026 per RURA directive'
+            tariff_type: 'RURA_Kigali_Official'
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
