@@ -1,4 +1,6 @@
 const API = "http://localhost:3000/api";
+const SHOW_POPULAR_TRIPS = false;
+
 
 // Official RURA tariff (effective April 6, 2026)
 // City of Kigali: 59.28 Frw per passenger per kilometre
@@ -59,6 +61,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (index === 0) originOption.selected = true;
             if (index === Math.min(1, stops.length - 1)) destinationOption.selected = true;
         });
+
+        // Hide popular trips if disabled
+        if (!SHOW_POPULAR_TRIPS) {
+            const quickLinksSection = document.querySelector('.quick-links-section');
+            if (quickLinksSection) {
+                quickLinksSection.style.display = 'none';
+            }
+        }
 
         initializeMap();
 
