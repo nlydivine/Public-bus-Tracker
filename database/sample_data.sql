@@ -46,6 +46,31 @@ INSERT INTO stop (stop_name, latitude, longitude, district, is_terminal) VALUES
 ('Kibaya',             -1.970000, 30.148000, 'Kicukiro',   FALSE),
 ('Chez Lando',         -1.952000, 30.095000, 'Gasabo',     FALSE);
 
+-- ===========================
+-- ADDITIONAL STOPS (real Kigali GPS)
+-- ===========================
+INSERT INTO stop (stop_name, latitude, longitude, district, is_terminal) VALUES
+('Gishushu',         -1.953780, 30.102310, 'Gasabo',     FALSE),
+('Nyamirambo',       -1.964960, 30.062880, 'Nyarugenge', FALSE),
+('Gikondo',          -1.982950, 30.075050, 'Kicukiro',   FALSE),
+('Muhima',           -1.955000, 30.058000, 'Nyarugenge', FALSE),
+('Biryogo',          -1.965140, 30.060120, 'Nyarugenge', FALSE),
+('Kibagabaga',       -1.932000, 30.120000, 'Gasabo',     FALSE),
+('Ndera',            -1.920000, 30.145000, 'Gasabo',     FALSE),
+('UTC Downtown',     -1.949200, 30.059000, 'Nyarugenge', FALSE),
+('Kigali Heights',   -1.939000, 30.087000, 'Gasabo',     FALSE),
+('Kagugu',           -1.928000, 30.097000, 'Gasabo',     FALSE),
+('Giporoso',         -1.952000, 30.110000, 'Gasabo',     FALSE),
+('Gatenga',          -1.993000, 30.095000, 'Kicukiro',   FALSE),
+('Kagarama',         -1.989000, 30.088000, 'Kicukiro',   FALSE),
+('Rwandex',          -1.957000, 30.068000, 'Nyarugenge', FALSE),
+('Nyabugogo Market', -1.942000, 30.046000, 'Nyarugenge', FALSE),
+('Kibovu',           -1.945000, 30.073000, 'Nyarugenge', FALSE),
+('Gatsata',          -1.930000, 30.060000, 'Gasabo',     FALSE),
+('Kinyinya',         -1.915000, 30.108000, 'Gasabo',     FALSE),
+('Zindiro',          -1.910000, 30.130000, 'Gasabo',     FALSE),
+('Jabana',           -1.905000, 30.118000, 'Gasabo',     FALSE);
+
 INSERT INTO route_stop (route_id, stop_id, stop_order, estimated_time) VALUES
 (1,7,1,0),(1,9,2,25),(1,8,3,15),(1,1,4,10),
 (2,13,1,0),(2,8,2,20),(2,1,3,10),
