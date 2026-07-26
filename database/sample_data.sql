@@ -1,7 +1,7 @@
 -- ==========================================
 -- Sample Data — Real Kigali GPS + KBS Routes
 -- ==========================================
-USE public_transport_tracker;
+USE smart_transport_tracker;
 
 INSERT INTO users (full_name, email, password, phone, role, status) VALUES
 ('Admin KBS',       'admin@kbs.rw',    'hashed_admin123', '+250788000001', 'Admin',     'Active'),
