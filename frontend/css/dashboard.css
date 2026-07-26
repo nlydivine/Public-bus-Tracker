@@ -28,22 +28,37 @@
 }
 
 .fare-summary {
-  padding: 24px;
+  padding: 20px;
   border-radius: var(--radius-lg);
   background: var(--bg-main);
   border: 1px solid var(--border-ui);
 }
 
+@media (min-width: 641px) {
+  .fare-summary {
+    padding: 24px;
+  }
+}
+
 .fare-value {
-  font-size: 42px;
-  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: clamp(30px, 8vw, 42px);
+  font-weight: 700;
   color: var(--transit-green);
   margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 .fare-meta {
   color: var(--text-muted);
   font-size: 14px;
+}
+
+.fare-meta strong,
+.schedule-meta strong {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-main);
 }
 
 .map-preview {
@@ -59,8 +74,8 @@
 
 .real-map-shell {
   position: relative;
-  height: 420px;
-  min-height: 420px;
+  height: clamp(240px, 52vw, 420px);
+  min-height: 240px;
   display: block;
   padding: 0;
   background: var(--bg-main);
@@ -162,13 +177,14 @@
 }
 
 .schedule-route-name {
-  font-size: 22px;
+  font-size: clamp(18px, 4.5vw, 22px);
   margin: 4px 0 8px;
 }
 
 .schedule-meta {
   display: flex;
-  gap: 18px;
+  gap: 14px;
+  row-gap: 8px;
   flex-wrap: wrap;
   color: var(--text-muted);
   font-size: 13px;
@@ -178,6 +194,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Buses glide to their next simulated GPS ping instead of snapping there */
+.leaflet-marker-icon.bus-map-icon {
+  transition: transform 3.6s linear;
 }
 
 .bus-marker-badge {

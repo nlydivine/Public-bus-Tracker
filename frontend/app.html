@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080c86">
   <title>TransitX - Trip Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/dashboard.css">
   <link
@@ -19,7 +23,10 @@
     <header class="system-header">
       <div class="logo-brand logo-link" onclick="window.location.href='index.html'">Transit<span>X</span></div>
       <div class="header-controls">
-        <div class="badge-status" data-i18n="app.badge"> Backend connected</div>
+        <div class="badge-status">
+          <span class="badge-dot" aria-hidden="true"></span>
+          <span class="badge-label" data-i18n="app.badge">Backend connected</span>
+        </div>
         <div class="lang-toggle">
           <button type="button" class="lang-option" data-lang="en">EN</button>
           <button type="button" class="lang-option" data-lang="rw">RW</button>
@@ -89,6 +96,7 @@
             <div id="scheduleMetaRow" class="schedule-meta">
               <span>⏰ <span data-i18n="app.firstDepartureLabel">First departure:</span> <strong id="firstRunOutput">--</strong></span>
               <span>⏱️ <span data-i18n="app.frequencyLabel">Every:</span> <strong id="frequencyOutput">--</strong></span>
+              <span>🚌 <span data-i18n="app.nextBusLabel">Next bus:</span> <strong id="nextBusOutput">--</strong></span>
             </div>
           </div>
 

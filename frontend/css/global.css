@@ -4,17 +4,19 @@
 /*  */
 
 :root {
-  --transit-green: #080c86;   /* Primary Accent color */
+  --transit-green: #080c86;   /* Primary Accent color (name is legacy — it's brand blue) */
   --transit-red: #D12229;     /* Secondary Warning/Alert color */
   --bg-main: #F5F4F0;         /* Soft warm grey background canvas */
   --bg-card: #FFFFFF;         /* Crisp white panel backdrops */
   --text-main: #1C1B18;       /* Primary typography color */
   --text-muted: #6B6A65;      /* Subdued label text color */
   --border-ui: #E6E4DE;       /* Clean dividing structural lines */
+  --live-green: #1E8E5A;      /* Genuine "live/connected" indicator color */
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 8px;
-  --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-stack: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 * {
@@ -41,21 +43,42 @@ body {
   flex-direction: column;
 }
 
+@media (max-width: 640px) {
+  .app-viewport-wrapper {
+    padding: 16px;
+  }
+}
+
 /* Global Application Header */
 .system-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 24px;
+  gap: 12px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--border-ui);
-  margin-bottom: 32px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 641px) {
+  .system-header {
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
 }
 
 .logo-brand {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.5px;
   color: var(--text-main);
+  white-space: nowrap;
+}
+
+@media (min-width: 641px) {
+  .logo-brand {
+    font-size: 24px;
+  }
 }
 
 .logo-brand span {
@@ -63,14 +86,46 @@ body {
 }
 
 .badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 12px;
   font-weight: 700;
   color: var(--transit-green);
-  background: rgba(7, 94, 61, 0.08);
+  background: rgba(8, 12, 134, 0.07);
   padding: 6px 14px;
   border-radius: 9999px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--live-green);
+  box-shadow: 0 0 0 0 rgba(30, 142, 90, 0.5);
+  animation: liveDotPulse 2.2s ease-out infinite;
+}
+
+@keyframes liveDotPulse {
+  0% { box-shadow: 0 0 0 0 rgba(30, 142, 90, 0.45); }
+  70% { box-shadow: 0 0 0 6px rgba(30, 142, 90, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(30, 142, 90, 0); }
+}
+
+/* On narrow phones the badge collapses to just the live dot — the pill
+   stays intact structurally, only the label text hides, so i18n is unaffected */
+@media (max-width: 420px) {
+  .badge-status {
+    padding: 7px;
+  }
+
+  .badge-label {
+    display: none;
+  }
 }
 
 /* 3-Tier Split Grid Dashboard Architecture */
@@ -84,13 +139,13 @@ body {
 
 @media (min-width: 968px) {
   .split-dashboard-grid {
-    grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+    grid-template-columns: minmax(340px, 420px) minmax(0, 1fr);
   }
 }
 
-@media (min-width: 968px) {
+@media (min-width: 1200px) {
   .split-dashboard-grid {
-    grid-template-columns: 420px 1fr;
+    gap: 32px;
   }
 }
 
@@ -99,12 +154,18 @@ body {
   background-color: var(--bg-card);
   border: 1px solid var(--border-ui);
   border-radius: var(--radius-lg);
-  padding: 32px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   min-width: 0;
   box-shadow: 0 4px 20px rgba(28, 27, 24, 0.02);
   animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (min-width: 641px) {
+  .app-panel-card {
+    padding: 32px;
+  }
 }
 
 /* Typography Helpers */
@@ -118,11 +179,18 @@ body {
 }
 
 .heading-headline {
-  font-size: 32px;
+  font-size: clamp(24px, 5.5vw, 32px);
   font-weight: 800;
   line-height: 1.15;
-  letter-spacing: -1px;
-  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 641px) {
+  .heading-headline {
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+  }
 }
 
 /* Connected Input Form Architecture */
@@ -182,6 +250,11 @@ body {
   border-color: var(--transit-green);
 }
 
+.select-menu-input:focus-visible {
+  outline: 2px solid var(--transit-green);
+  outline-offset: 2px;
+}
+
 /* UI Interactive Buttons */
 .action-btn-ui {
   width: 100%;
@@ -193,11 +266,20 @@ body {
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
+}
+
+.action-btn-ui:hover {
+  opacity: 0.9;
+}
+
+.action-btn-ui:focus-visible {
+  outline: 2px solid var(--transit-green);
+  outline-offset: 2px;
 }
 
 .action-btn-ui:active {
@@ -291,6 +373,11 @@ body {
   box-shadow: 0 1px 3px rgba(28, 27, 24, 0.08);
 }
 
+.lang-option:focus-visible {
+  outline: 2px solid var(--transit-green);
+  outline-offset: 2px;
+}
+
 .header-controls {
   display: flex;
   align-items: center;
@@ -301,4 +388,12 @@ body {
   0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(209, 34, 41, 0.4); }
   70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(209, 34, 41, 0); }
   100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(209, 34, 41, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-panel-card,
+  .badge-dot,
+  .map-preview-marker {
+    animation: none !important;
+  }
 }
