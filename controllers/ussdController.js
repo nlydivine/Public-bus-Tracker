@@ -129,10 +129,15 @@ Hitamo ururimi / Choose language:
 
     /*
         EXIT
+        FIX: was text.endsWith("*6"), which incorrectly matched any
+        nested menu path ending in 6 (e.g. "1*1*6" = Bus Arrival ->
+        Downtown), causing valid selections to exit early instead
+        of showing results. Exit is only ever reachable directly
+        from the main menu, so we match exact paths now.
     */
 
 
-    if(text.endsWith("*6")) {
+    if(text === "1*6" || text === "2*6") {
 
 
         return sendText(

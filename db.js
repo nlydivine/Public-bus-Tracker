@@ -8,16 +8,20 @@
 require("dotenv").config();
 const mysql = require("mysql2");
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     host: process.env.DB_HOST || "localhost",
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "public_transport_tracker",
-    port: Number(process.env.DB_PORT || 3306)
+    port: Number(process.env.DB_PORT || 30000),
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
-
-db.connect((err) => {
+// Quick sanity check on startup so you see a clear log if credentials
+// are wrong, without holding open a connection the whole app relies on.
+db.getConnection((err, connection) => {
     if (err) {
         console.error("❌ MySQL connection failed:");
         console.error(err.message);
@@ -25,7 +29,7 @@ db.connect((err) => {
     }
 
     console.log("✅ MySQL Database Connected Successfully");
+    connection.release();
 });
-
 
 module.exports = db;
