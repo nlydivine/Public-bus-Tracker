@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TransitX - Trip Dashboard</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  >
+</head>
+<body>
+
+  <div class="app-viewport-wrapper">
+
+    <header class="system-header">
+      <div class="logo-brand logo-link" onclick="window.location.href='index.html'">Transit<span>X</span></div>
+      <div class="header-controls">
+        <div class="badge-status" data-i18n="app.badge"> Backend connected</div>
+        <div class="lang-toggle">
+          <button type="button" class="lang-option" data-lang="en">EN</button>
+          <button type="button" class="lang-option" data-lang="rw">RW</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="split-dashboard-grid">
+
+      <section class="app-panel-card planner-panel">
+        <div>
+          <p class="context-micro-label" data-i18n="app.plannerLabel">Plan a trip</p>
+          <h2 class="heading-headline planner-heading" data-i18n="app.plannerHeading">Where are you headed?</h2>
+          <p class="planner-intro" data-i18n="app.plannerIntro">Pick a starting stop and a destination to see the fare, route, and schedule.</p>
+
+          <div class="input-group-stack">
+            <div class="input-wrapper-node">
+              <span class="input-icon-marker">🟢</span>
+              <select id="originSelect" class="select-menu-input" data-i18n-aria="app.originAria" aria-label="Origin stop">
+                </select>
+            </div>
+
+            <div class="input-wrapper-node">
+              <span class="input-icon-marker">📍</span>
+              <select id="destSelect" class="select-menu-input" data-i18n-aria="app.destAria" aria-label="Destination stop">
+                </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-links-section">
+          <p class="context-micro-label quick-links-label" data-i18n="app.quickLinksLabel">Popular trips</p>
+          <div class="quick-links-list">
+            <button onclick="selectQuickRoute('nyabugogo', 'kacyiru')" class="action-btn-ui quick-route-btn" data-i18n="app.quickRoute1">
+              🚌 Nyabugogo → Kacyiru (Route 81)
+            </button>
+            <button onclick="selectQuickRoute('downtown', 'kimironko')" class="action-btn-ui quick-route-btn" data-i18n="app.quickRoute2">
+              🚌 Downtown → Kimironko (Route 102)
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="app-panel-card dashboard-detail-panel">
+
+        <div class="fare-summary">
+          <p class="context-micro-label" data-i18n="app.fareLabel">Estimated fare</p>
+          <h3 id="fareOutput" class="fare-value">0 RWF</h3>
+          <p class="fare-meta">
+            <span data-i18n="app.distanceLabel">Distance:</span> <strong id="distanceOutput">0</strong> <span id="distanceUnit" data-i18n="app.distanceUnit">km</span>
+          </p>
+        </div>
+
+        <div>
+          <p class="context-micro-label" data-i18n="app.mapLabel">Live map preview</p>
+          <div class="map-preview real-map-shell">
+            <span class="map-preview-tag" data-i18n="app.mapTag">OpenStreetMap</span>
+            <div id="transitMap"></div>
+            <p id="mapPlaceholderText" class="map-preview-label map-live-label" data-i18n="app.mapDefault">Choose a trip to preview it here</p>
+          </div>
+        </div>
+
+        <div class="schedule-section">
+          <div>
+            <p class="schedule-active-label" data-i18n="app.routeLabel">Route</p>
+            <h4 id="routeNameOutput" class="schedule-route-name" data-i18n="app.routeDefault">Choose a starting stop and destination</h4>
+            <div id="scheduleMetaRow" class="schedule-meta">
+              <span>⏰ <span data-i18n="app.firstDepartureLabel">First departure:</span> <strong id="firstRunOutput">--</strong></span>
+              <span>⏱️ <span data-i18n="app.frequencyLabel">Every:</span> <strong id="frequencyOutput">--</strong></span>
+              <span>🚌 <span data-i18n="app.nextBusLabel">Next bus:</span> <strong id="nextBusOutput">--</strong></span>
+            </div>
+          </div>
+
+          <div id="timelineContainer" class="route-timeline-stack">
+            </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
