@@ -506,11 +506,11 @@ ussd-menu.png
 
 # Contributors
 
-Oluwatomi Joshua Thompson
-Nyayath Lual Deng
-Nshuti Lydivine
-Tiffany Lina Sangwa Turate
-Prince Hugue Ishimwe
+Oluwatomi Joshua Thompson ,
+Nyayath Lual Deng,
+Nshuti Lydivine,
+Tiffany Lina Sangwa Turate,
+Prince Hugue Ishimwe,
 
 BSc Software Engineering
 
