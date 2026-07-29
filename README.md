@@ -506,15 +506,15 @@ ussd-menu.png
 
 # Contributors
 
-**Nyayath Lual Deng**
+Oluwatomi Joshua Thompson
+Nyayath Lual Deng
+Nshuti Lydivine
+Tiffany Lina Sangwa Turate
+Prince Hugue Ishimwe
 
 BSc Software Engineering
 
 African Leadership University
-
-GitHub:
-
-https://github.com/yourusername
 
 ---
 
