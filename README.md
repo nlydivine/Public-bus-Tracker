@@ -468,20 +468,21 @@ The project was tested using
 
 # 📷 Screenshots
 
-Add screenshots here.
-
 Example
 
 ```
 screenshots/
 
 home-page.png
+<img width="786" height="788" alt="Screenshot 2026-07-30 175325" src="https://github.com/user-attachments/assets/8d99e802-9979-4752-af96-e359f191163e" />
 
-dashboard.png
-
-live-map.png
 
 route-search.png
+<img width="478" height="724" alt="Screenshot 2026-07-30 175409" src="https://github.com/user-attachments/assets/ec88e910-f5eb-48ee-9b09-45d723d81169" />
+
+
+live-map.png
+<img width="852" height="498" alt="Screenshot 2026-07-30 175442" src="https://github.com/user-attachments/assets/1268b70a-6bd0-49b4-859f-701e6f6f30c0" />
 
 ussd-menu.png
 ```
