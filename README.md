@@ -470,7 +470,7 @@ The project was tested using
 
 Example
 
-```
+
 screenshots/
 
 home-page.png
@@ -506,7 +506,7 @@ ussd-menu.png
 
 # Contributors
 
-Oluwatomi Joshua Thompson ,
+Oluwatomi Joshua Thompson,
 Nyayath Lual Deng,
 Nshuti Lydivine,
 Tiffany Lina Sangwa Turate,
