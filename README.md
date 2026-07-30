@@ -245,8 +245,7 @@ Public-bus-Tracker/
 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/Public-bus-Tracker.git
-```
+git@github.com:nlydivine/Public-bus-Tracker.git```
 
 ---
 
