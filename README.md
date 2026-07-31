@@ -1,4 +1,4 @@
-#  Kigali Public Transport Tracker
+# Kigali Public Transport Tracker
 
 A real-time public transport tracking system developed to improve accessibility, reliability, and efficiency of public transportation in Kigali, Rwanda.
 
@@ -16,7 +16,7 @@ Passengers can:
 
 ---
 
-#  Table of Contents
+# Table of Contents
 
 * Project Overview
 * Problem Statement
@@ -107,7 +107,7 @@ To develop a real-time public transport tracking system that improves transport 
 * Fare information
 * Responsive user interface
 
-## Backend System
+# Backend System
 
 * REST API services
 * MySQL database integration
@@ -134,7 +134,7 @@ Supported languages:
 * English
 * Kinyarwanda
 
-## GPS Tracking
+# GPS Tracking
 
 * Live GPS updates
 * GPS simulator
@@ -166,6 +166,8 @@ Supported languages:
  Transport Data
 (Buses, Routes, Stops, GPS)
 ```
+<img width="2720" height="2144" alt="kigali_tracker_data_flow_architecture (1)" src="https://github.com/user-attachments/assets/1deb890f-20fc-42c9-bf7e-19a9cf73b1d7" />
+
 
 ---
 
@@ -619,15 +621,27 @@ CON Welcome to Kigali Public Transport Tracker
 screenshots/
 
 home-page.png
+<img width="815" height="857" alt="image" src="https://github.com/user-attachments/assets/f194e766-4f6c-4fd9-a762-6b34d21f2b7f" />
+
 
 route-search.png
+<img width="460" height="840" alt="Screenshot 2026-07-31 212334" src="https://github.com/user-attachments/assets/b665f0c8-122b-459f-9dea-fe412f4f2f02" />
+
 
 live-map.png
+<img width="827" height="517" alt="image" src="https://github.com/user-attachments/assets/a7835f03-3213-4fb0-996b-e81829d7b1c1" />
+
 
 ussd-menu.png
+https://chat.google.com/room/AAQA97MF-fU/xnExmMS5kc0/xnExmMS5kc0?cls=10
 ```
 
 ---
+
+Access the app through this 
+Web App : https://chat.google.com/room/AAQA97MF-fU/weDySOGqgkk/weDySOGqgkk?cls=10
+Demo video: 
+
 
 # Future Improvements
 
