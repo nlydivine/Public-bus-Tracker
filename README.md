@@ -146,7 +146,7 @@ Supported languages:
 
 #  System Architecture
 
-```
+
 <img width="220" height="244" alt="kigali_tracker_data_flow_architecture (1)" src="https://github.com/user-attachments/assets/1deb890f-20fc-42c9-bf7e-19a9cf73b1d7" />
 
 
@@ -624,6 +624,7 @@ screenshots
 Access the app through this
 
 Web App : https://chat.google.com/room/AAQA97MF-fU/weDySOGqgkk/weDySOGqgkk?cls=10
+
 Demo video: https://www.youtube.com/watch?v=qqVw2wOT6UY
 
 
@@ -655,9 +656,6 @@ BSc Software Engineering
 African Leadership University
 
 ---
-Web App: https://chat.google.com/room/AAQA97MF-fU/weDySOGqgkk/weDySOGqgkk?cls=10 
-Demo Video:https://www.youtube.com/watch?v=qqVw2wOT6UY
-
 
 
 # 📄 License
