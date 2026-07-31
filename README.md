@@ -147,26 +147,7 @@ Supported languages:
 #  System Architecture
 
 ```
-                Passenger
-                    |
-        -------------------------
-        |                       |
-    Web Application          USSD Service
-        |                       |
-        -------------------------
-                    |
-              Node.js Backend
-              Express.js API
-                    |
-        -------------------------
-        |                       |
-       MySQL Database       GPS Simulator
-        |
-        |
- Transport Data
-(Buses, Routes, Stops, GPS)
-```
-<img width="2720" height="2144" alt="kigali_tracker_data_flow_architecture (1)" src="https://github.com/user-attachments/assets/1deb890f-20fc-42c9-bf7e-19a9cf73b1d7" />
+<img width="220" height="244" alt="kigali_tracker_data_flow_architecture (1)" src="https://github.com/user-attachments/assets/1deb890f-20fc-42c9-bf7e-19a9cf73b1d7" />
 
 
 ---
@@ -552,19 +533,19 @@ GET /api/routes
 GET /api/stops
 ```
 
-## Get GPS Locations
+# Get GPS Locations
 
 ```
 GET /api/gps
 ```
 
-## Get Bus GPS
+# Get Bus GPS
 
 ```
 GET /api/gps/:bus_id
 ```
 
-## USSD
+# USSD
 
 ```
 POST /api/ussd
@@ -581,7 +562,7 @@ Example:
 
 ---
 
-# 🧪 Testing
+#  Testing
 
 The system was tested using:
 
@@ -621,7 +602,7 @@ CON Welcome to Kigali Public Transport Tracker
 screenshots
 
      home-page.png
-<img width="115" height="157" alt="image" src="https://github.com/user-attachments/assets/f194e766-4f6c-4fd9-a762-6b34d21f2b7f" />
+<img width="527" height="217" alt="image" src="https://github.com/user-attachments/assets/f194e766-4f6c-4fd9-a762-6b34d21f2b7f" />
 
 
        route-search.png
@@ -633,17 +614,17 @@ screenshots
 
 
        ussd-menu.png
-       https://chat.google.com/room/AAQA97MF-fU/xnExmMS5kc0/xnExmMS5kc0?cls=10
 
        
-https://chat.google.com/room/AAQA97MF-fU/xnExmMS5kc0/xnExmMS5kc0?cls=10
-```
+<img width="523" height="814" alt="Screenshot 2026-07-26 183149" src="https://github.com/user-attachments/assets/dbf9af52-8be9-4b48-ade0-e6774f4e6eff" />
+
 
 ---
 
-Access the app through this 
+Access the app through this
+
 Web App : https://chat.google.com/room/AAQA97MF-fU/weDySOGqgkk/weDySOGqgkk?cls=10
-Demo video: 
+Demo video: https://www.youtube.com/watch?v=qqVw2wOT6UY
 
 
 # Future Improvements
@@ -674,6 +655,10 @@ BSc Software Engineering
 African Leadership University
 
 ---
+Web App: https://chat.google.com/room/AAQA97MF-fU/weDySOGqgkk/weDySOGqgkk?cls=10 
+Demo Video:https://www.youtube.com/watch?v=qqVw2wOT6UY
+
+
 
 # 📄 License
 
