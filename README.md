@@ -623,7 +623,7 @@ screenshots
 
 Access the app through this
 
-Web App : https://chat.google.com/room/AAQA97MF-fU/weDySOGqgkk/weDySOGqgkk?cls=10
+Web App: https://kigali-bus-tracker.onrender.com
 
 Demo video: https://www.youtube.com/watch?v=qqVw2wOT6UY
 
