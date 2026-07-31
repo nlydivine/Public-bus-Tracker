@@ -506,7 +506,7 @@ ngrok http 3000
 Example callback:
 
 ```
-https://xxxx.ngrok.io/api/ussd
+[https://chevy-jaybird-squealer.ngrok-free.dev/api/ussd]
 ```
 
 This URL is configured in Africa's Talking Sandbox.
