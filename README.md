@@ -618,21 +618,24 @@ CON Welcome to Kigali Public Transport Tracker
 # Screenshots
 
 
-screenshots/
+screenshots
 
-home-page.png
-<img width="815" height="857" alt="image" src="https://github.com/user-attachments/assets/f194e766-4f6c-4fd9-a762-6b34d21f2b7f" />
-
-
-route-search.png
-<img width="460" height="840" alt="Screenshot 2026-07-31 212334" src="https://github.com/user-attachments/assets/b665f0c8-122b-459f-9dea-fe412f4f2f02" />
+     home-page.png
+<img width="115" height="157" alt="image" src="https://github.com/user-attachments/assets/f194e766-4f6c-4fd9-a762-6b34d21f2b7f" />
 
 
-live-map.png
-<img width="827" height="517" alt="image" src="https://github.com/user-attachments/assets/a7835f03-3213-4fb0-996b-e81829d7b1c1" />
+       route-search.png
+<img width="460" height="540" alt="Screenshot 2026-07-31 212334" src="https://github.com/user-attachments/assets/b665f0c8-122b-459f-9dea-fe412f4f2f02" />
 
 
-ussd-menu.png
+     live-map.png
+<img width="527" height="217" alt="image" src="https://github.com/user-attachments/assets/a7835f03-3213-4fb0-996b-e81829d7b1c1" />
+
+
+       ussd-menu.png
+       https://chat.google.com/room/AAQA97MF-fU/xnExmMS5kc0/xnExmMS5kc0?cls=10
+
+       
 https://chat.google.com/room/AAQA97MF-fU/xnExmMS5kc0/xnExmMS5kc0?cls=10
 ```
 
