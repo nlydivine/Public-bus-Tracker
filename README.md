@@ -147,7 +147,7 @@ Supported languages:
 #  System Architecture
 
 
-<img width="420" height="544" alt="kigali_tracker_data_flow_architecture (1)" src="https://github.com/user-attachments/assets/1deb890f-20fc-42c9-bf7e-19a9cf73b1d7" />
+<img width="420" height="1544" alt="kigali_tracker_data_flow_architecture (1)" src="https://github.com/user-attachments/assets/1deb890f-20fc-42c9-bf7e-19a9cf73b1d7" />
 
 
 ---
@@ -602,7 +602,7 @@ CON Welcome to Kigali Public Transport Tracker
 screenshots
 
      home-page.png
-<img width="527" height="217" alt="image" src="https://github.com/user-attachments/assets/f194e766-4f6c-4fd9-a762-6b34d21f2b7f" />
+<img width="527" height="717" alt="image" src="https://github.com/user-attachments/assets/f194e766-4f6c-4fd9-a762-6b34d21f2b7f" />
 
 
        route-search.png
