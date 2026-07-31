@@ -628,7 +628,7 @@ Access the app through this
 
 Web App: https://kigali-bus-tracker.onrender.com
 
-Demo video: https://www.youtube.com/watch?v=qqVw2wOT6UY
+Demo video: https://www.youtube.com/watch?v=2SnsfoO5qhk
 
 
 # Future Improvements
