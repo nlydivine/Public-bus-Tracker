@@ -617,7 +617,7 @@ CON Welcome to Kigali Public Transport Tracker
 
 # Screenshots
 
-```
+
 screenshots/
 
 home-page.png
