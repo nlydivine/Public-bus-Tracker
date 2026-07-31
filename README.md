@@ -1,150 +1,170 @@
-# 🚌 Kigali Public Transport Tracker
+#  Kigali Public Transport Tracker
 
-A real-time public transport tracking system developed to improve the accessibility, efficiency, and reliability of public transportation in Kigali, Rwanda. The system allows commuters to track buses on a live map, view routes and bus stops, check fares, and access transport information through both a web application and a USSD service.
+A real-time public transport tracking system developed to improve accessibility, reliability, and efficiency of public transportation in Kigali, Rwanda.
+
+The system combines **GPS tracking, a web-based transport dashboard, MySQL database management, and USSD technology** to provide passengers with real-time bus information.
+
+Passengers can:
+
+* Track buses on a live map
+* View Kigali bus routes
+* Find bus stops
+* Check fares
+* Access transport information through USSD
+* Report delays
+* Use the service without internet access through USSD
 
 ---
 
-# 📖 Table of Contents
+#  Table of Contents
 
-- Project Overview
-- Problem Statement
-- Objectives
-- Features
-- System Architecture
-- Technology Stack
-- Project Structure
-- Installation Guide
-- Database Setup
-- Environment Variables
-- Running the Project
-- GPS Simulator
-- USSD Integration
-- API Endpoints
-- Testing
-- Screenshots
-- Future Improvements
-- Contributors
-- License
+* Project Overview
+* Problem Statement
+* Objectives
+* Features
+* System Architecture
+* Technology Stack
+* Project Structure
+* Installation Guide
+* Database Setup
+* Database Structure
+* Environment Variables
+* Running the Project
+* GPS Simulator
+* USSD Integration
+* API Endpoints
+* Testing
+* Screenshots
+* Future Improvements
+* Contributors
+* License
 
 ---
 
 # 🚍 Project Overview
 
-Public transportation is an essential service in Kigali, serving thousands of commuters daily. However, passengers often experience uncertainty due to the lack of real-time bus location information.
+Public transportation is one of the most important services in Kigali, Rwanda. However, many passengers experience challenges caused by a lack of real-time information about bus locations, routes, and arrival times.
 
-The Kigali Public Transport Tracker addresses this challenge by integrating GPS tracking, a web application, and a USSD platform to provide passengers with accurate and up-to-date transport information.
+The Kigali Public Transport Tracker was developed to solve this problem by providing a digital platform that connects passengers with transport information.
 
-The system enables:
+The system integrates:
 
-- Live bus tracking
-- Route management
-- Bus stop information
-- Fare lookup
-- Delay reporting
-- USSD access for feature phones
-- GPS simulation for testing
+* GPS-based bus tracking
+* Interactive web mapping
+* Route management
+* Bus stop management
+* Fare information
+* USSD access for feature phone users
 
----
-
-# ❗ Problem Statement
-
-Many commuters in Kigali experience long waiting times and uncertainty because they do not know the current location of buses or available routes.
-
-Existing solutions provide limited real-time tracking and are often inaccessible to users without smartphones or internet access.
-
-This project was developed to improve the passenger experience by providing real-time transport information through both web and USSD technologies.
+The system supports both smartphone users through the web application and users without internet access through USSD.
 
 ---
 
-# 🎯 Objectives
+# Problem Statement
 
-## Main Objective
+Many public transport users in Kigali experience:
 
-To develop a real-time public transport tracking system that improves accessibility and efficiency for commuters in Kigali.
+* Long waiting times at bus stops
+* Difficulty knowing bus locations
+* Limited access to route information
+* Lack of real-time transport updates
 
-### Specific Objectives
+Most existing transport solutions depend on smartphones and internet connectivity, leaving some passengers without access.
 
-- Track buses using GPS.
-- Display buses on an interactive map.
-- Show available routes.
-- Display bus stops.
-- Provide fare information.
-- Allow passengers to report delays.
-- Support USSD access.
-- Store GPS location history.
-- Provide REST APIs for transport data.
+This project addresses this challenge by developing an inclusive transport tracking system accessible through both web and USSD platforms.
 
 ---
 
-# Features
+#  Objectives
 
-## Web Application
+# Main Objective
 
-- Interactive map
-- Live GPS tracking
-- Bus routes
-- Bus stops
-- Fare information
-- Responsive interface
+To develop a real-time public transport tracking system that improves transport accessibility and passenger experience in Kigali.
 
-## Backend
+## Specific Objectives
 
-- REST API
-- MySQL integration
-- GPS data processing
-- Route management
-- Bus management
-- Stop management
-
-## USSD
-
-- Bus arrival lookup
-- Route search
-- Fare lookup
-- Nearby stops
-- Delay reporting
-- English support
-- Kinyarwanda support
-
-## GPS
-
-- Real-time location updates
-- GPS simulator
-- Historical location storage
+* Develop a web application for bus tracking.
+* Integrate GPS technology for live bus locations.
+* Store transport information using MySQL.
+* Display Kigali bus routes and stops.
+* Provide fare information.
+* Develop USSD access for feature phone users.
+* Support English and Kinyarwanda languages.
+* Allow passengers to report delays.
+* Provide REST APIs for transport data.
 
 ---
 
-# 🏗 System Architecture
+#  Features
+
+# Web Application
+
+* Interactive Leaflet map
+* Live bus location display
+* Kigali route visualization
+* Bus stop information
+* Route management
+* Fare information
+* Responsive user interface
+
+## Backend System
+
+* REST API services
+* MySQL database integration
+* Route management
+* Bus management
+* GPS data processing
+* USSD processing
+
+# USSD Service
+
+The USSD service allows passengers without smartphones to access transport information.
+
+Features:
+
+* Language selection
+* Bus arrival information
+* Route search
+* Fare lookup
+* Nearby bus stops
+* Delay reporting
+
+Supported languages:
+
+* English
+* Kinyarwanda
+
+## GPS Tracking
+
+* Live GPS updates
+* GPS simulator
+* Bus location history
+* Speed tracking
+* Database storage
+
+---
+
+#  System Architecture
 
 ```
-                +----------------------+
-                |     GPS Devices      |
-                +----------+-----------+
-                           |
-                           |
-                           v
-                +----------------------+
-                |   Express REST API   |
-                |      Node.js         |
-                +----------+-----------+
-                           |
-                           |
-                           v
-                +----------------------+
-                |     MySQL Database   |
-                +----------+-----------+
-                           |
-          +----------------+----------------+
-          |                                 |
-          |                                 |
-          v                                 v
-
-   Web Application                    USSD Service
-          |                                 |
-          +---------------+-----------------+
-                          |
-                          |
-                    Public Users
+                Passenger
+                    |
+        -------------------------
+        |                       |
+    Web Application          USSD Service
+        |                       |
+        -------------------------
+                    |
+              Node.js Backend
+              Express.js API
+                    |
+        -------------------------
+        |                       |
+       MySQL Database       GPS Simulator
+        |
+        |
+ Transport Data
+(Buses, Routes, Stops, GPS)
 ```
 
 ---
@@ -153,85 +173,84 @@ To develop a real-time public transport tracking system that improves accessibil
 
 ## Frontend
 
-- HTML5
-- CSS3
-- JavaScript
-- Leaflet.js
+* HTML5
+* CSS3
+* JavaScript
+* Leaflet.js
 
 ## Backend
 
-- Node.js
-- Express.js
+* Node.js
+* Express.js
 
 ## Database
 
-- MySQL
+* MySQL
 
 ## APIs
 
-- REST API
+* REST API
 
 ## GPS
 
-- Leaflet Maps
-- GPS Simulator
+* GPS Simulator
+* Leaflet Maps
 
 ## USSD
 
-- Africa's Talking Sandbox
+* Africa's Talking Sandbox
 
 ## Development Tools
 
-- Visual Studio Code
-- Git
-- GitHub
-- XAMPP
-- phpMyAdmin
-- Postman
-- Ngrok
+* Visual Studio Code
+* Git
+* GitHub
+* XAMPP
+* phpMyAdmin
+* Postman
+* Ngrok
 
 ---
 
-# Project Structure
+# 📂 Project Structure
 
 ```
 Public-bus-Tracker/
 
 │
 ├── controllers/
-│      ussdController.js
+│      └── ussdController.js
 │
 ├── routes/
-│      buses.js
-│      routes.js
-│      stops.js
-│      gps.js
-│      ussd.js
+│      ├── buses.js
+│      ├── routes.js
+│      ├── stops.js
+│      ├── gps.js
+│      └── ussd.js
 │
-├── models/
+├── services/
+│      └── etaService.js
 │
 ├── gps/
-│      simulator.js
+│      └── simulator.js
 │
 ├── frontend/
-│      index.html
-│      app.html
-│
-│      css/
-│           global.css
-│           dashboard.css
-│           home.css
-│
-│      js/
-│           app.js
+│      ├── index.html
+│      ├── app.html
+│      │
+│      ├── css/
+│      │     ├── global.css
+│      │     ├── dashboard.css
+│      │     └── home.css
+│      │
+│      └── js/
+│            └── app.js
 │
 ├── database/
-│      database.sql
+│      └── database.sql
 │
-├── config/
-│      db.js
-│
-├── server.js
+├── db.js
+├── index.js
 ├── package.json
 └── README.md
 ```
@@ -240,18 +259,13 @@ Public-bus-Tracker/
 
 # ⚙ Installation Guide
 
-## Step 1
-
-Clone the repository
+## Clone Repository
 
 ```bash
-git@github.com:nlydivine/Public-bus-Tracker.git```
+git clone git@github.com:nlydivine/Public-bus-Tracker.git
+```
 
----
-
-## Step 2
-
-Move into the project
+Move into the project:
 
 ```bash
 cd Public-bus-Tracker
@@ -259,9 +273,7 @@ cd Public-bus-Tracker
 
 ---
 
-## Step 3
-
-Install dependencies
+## Install Dependencies
 
 ```bash
 npm install
@@ -269,40 +281,79 @@ npm install
 
 ---
 
-## Step 4
-
-Start MySQL
-
-Using XAMPP
-
-- Start Apache
-- Start MySQL
-
----
-
 # 🗄 Database Setup
 
-Create a database named
+Start XAMPP:
+
+Enable:
+
+* Apache
+* MySQL
+
+Create database:
 
 ```
 public_transport_tracker
 ```
 
-Import
+Import:
 
 ```
-database.sql
+database/database.sql
 ```
 
 using phpMyAdmin.
 
 ---
 
+# Database Structure
+
+The system uses the following tables:
+
+| Table         | Purpose                        |
+| ------------- | ------------------------------ |
+| users         | Stores system users            |
+| bus           | Stores bus information         |
+| route         | Stores Kigali transport routes |
+| stop          | Stores bus stop locations      |
+| route_stop    | Connects routes and stops      |
+| trip          | Stores scheduled trips         |
+| bus_location  | Stores GPS history             |
+| notifications | Stores passenger notifications |
+
+---
+
+# Kigali Route Database
+
+The system contains Kigali transport routes including:
+
+* Nyabugogo routes
+* Downtown routes
+* Remera routes
+* Kimironko routes
+* Kacyiru routes
+* Kicukiro routes
+* Kanombe routes
+* Kabuga routes
+* Nyamirambo routes
+* Masaka routes
+
+The same route database is used by:
+
+* Web Application
+* USSD Service
+
+---
+
 # Environment Variables
 
-Create a `.env` file.
+Create:
 
-Example
+```
+.env
+```
+
+Example:
 
 ```env
 PORT=3000
@@ -318,130 +369,198 @@ AT_USERNAME=sandbox
 
 ---
 
-# ▶ Running the Server
+# ▶ Running the Project
+
+Start backend:
 
 ```bash
-node server.js
+node index.js
 ```
 
-or
-
-```bash
-npm start
-```
-
-You should see
+Expected output:
 
 ```
-Server running on port 3000
+Server running at http://localhost:3000
 
 MySQL Database Connected Successfully
 ```
 
 ---
 
-# 📡 GPS Simulator
+# GPS Simulator
 
-Run
+The GPS simulator generates bus movement data for testing.
+
+Run:
 
 ```bash
 node gps/simulator.js
 ```
 
-The simulator continuously updates bus locations in the database.
-
-Example output
+Example:
 
 ```
 Bus 1 updated
-
 Bus 2 updated
-
 Bus 3 updated
+```
+
+GPS information is stored inside:
+
+```
+bus_location
+```
+
+table.
+
+---
+
+# 📱 USSD Integration
+
+The system integrates with Africa's Talking Sandbox to provide transport services through mobile networks.
+
+USSD endpoint:
+
+```
+POST /api/ussd
 ```
 
 ---
 
-# USSD Integration
-
-The project integrates with Africa's Talking Sandbox.
-
-Example menu
+# USSD Menu
 
 ```
-Welcome
+Welcome to Kigali Public Transport Tracker
 
+1. English
+2. Kinyarwanda
+```
+
+---
+
+# English Menu
+
+```
 1. Check Bus Arrival
-
 2. Find Route
-
 3. Check Fare
-
 4. Nearby Bus Stops
-
 5. Report Delay
-
 6. Exit
 ```
 
-Supported Languages
+---
 
-- English
-- Kinyarwanda
+# Kinyarwanda Menu
+
+```
+1. Kureba igihe imodoka igerera aho uhagaze
+2. Gushaka inzira y'urugendo
+3. Kureba amafaranga y'urugendo
+4. Kureba ahahagarara imodoka
+5. Kumenyesha gutinda kw'imodoka
+6. Gusohoka
+```
+
+---
+
+# USSD Features
+
+## Bus Arrival
+
+Users can select a bus stop and receive:
+
+* Bus number
+* Route name
+* Current location
+* Distance
+* Estimated arrival time
+
+## Route Search
+
+Routes are loaded dynamically from MySQL.
+
+Example:
+
+```
+Kabuga - Nyabugogo via Sonatube
+
+Rubirizi - Downtown
+
+Kibaya - Kanombe Airport - Downtown
+
+Remera - Nyabugogo
+```
+
+## Fare Lookup
+
+Fare calculation:
+
+```
+Fare = Distance × Fare Rate
+```
+
+## Nearby Stops
+
+Displays available Kigali bus stops.
+
+## Delay Reporting
+
+Passengers can report delayed buses.
+
+---
+
+# Africa's Talking Setup
+
+For local testing:
+
+Install and run Ngrok:
+
+```bash
+ngrok http 3000
+```
+
+Example callback:
+
+```
+https://xxxx.ngrok.io/api/ussd
+```
+
+This URL is configured in Africa's Talking Sandbox.
 
 ---
 
 # 🌐 API Endpoints
 
-## Buses
+## Get Buses
 
 ```
 GET /api/buses
 ```
 
-Returns all buses.
-
----
-
-## Routes
+## Get Routes
 
 ```
 GET /api/routes
 ```
 
-Returns all routes.
-
----
-
-## Stops
+## Get Stops
 
 ```
 GET /api/stops
 ```
 
-Returns all bus stops.
-
----
-
-## GPS
+## Get GPS Locations
 
 ```
 GET /api/gps
 ```
 
-Returns current GPS locations.
-
----
-
-## GPS by Bus
+## Get Bus GPS
 
 ```
 GET /api/gps/:bus_id
 ```
-
-Returns the latest GPS location for a specific bus.
-
----
 
 ## USSD
 
@@ -449,68 +568,89 @@ Returns the latest GPS location for a specific bus.
 POST /api/ussd
 ```
 
-Processes USSD requests.
+Example:
+
+```json
+{
+ "sessionId":"test001",
+ "text": "1*2"
+}
+```
 
 ---
 
-# Testing
+# 🧪 Testing
 
-The project was tested using
+The system was tested using:
 
-- Postman
-- Africa's Talking Sandbox
-- GPS Simulator
-- Browser Testing
-- MySQL Database Testing
-- Integration Testing
+* Postman
+* PowerShell
+* Africa's Talking Sandbox
+* GPS Simulator
+* Browser Testing
+* MySQL Testing
+
+Example USSD test:
+
+```powershell
+Invoke-RestMethod `
+-Uri http://localhost:3000/api/ussd `
+-Method POST `
+-Body @{
+sessionId="test001"
+text=""
+}
+```
+
+Expected:
+
+```
+CON Welcome to Kigali Public Transport Tracker
+
+1. English
+2. Kinyarwanda
+```
 
 ---
 
-# 📷 Screenshots
+# Screenshots
 
-Example
-
-
+```
 screenshots/
 
 home-page.png
-<img width="786" height="788" alt="Screenshot 2026-07-30 175325" src="https://github.com/user-attachments/assets/8d99e802-9979-4752-af96-e359f191163e" />
-
 
 route-search.png
-<img width="478" height="724" alt="Screenshot 2026-07-30 175409" src="https://github.com/user-attachments/assets/ec88e910-f5eb-48ee-9b09-45d723d81169" />
-
 
 live-map.png
-<img width="852" height="498" alt="Screenshot 2026-07-30 175442" src="https://github.com/user-attachments/assets/1268b70a-6bd0-49b4-859f-701e6f6f30c0" />
 
 ussd-menu.png
 ```
 
 ---
 
-#  Future Improvements
+# Future Improvements
 
-- Mobile application
-- Push notifications
-- AI arrival prediction
-- Driver mobile application
-- Passenger accounts
-- Electronic ticketing
-- QR code payments
-- Traffic congestion analysis
-- Admin dashboard
-- Analytics dashboard
+* Mobile application
+* AI arrival prediction
+* Driver mobile application
+* Passenger accounts
+* Electronic ticketing
+* QR code payment
+* Traffic analysis
+* Admin dashboard
+* Analytics dashboard
+* Real GPS hardware integration
 
 ---
 
 # Contributors
 
-Oluwatomi Joshua Thompson,
-Nyayath Lual Deng,
-Nshuti Lydivine,
-Tiffany Lina Sangwa Turate,
-Prince Hugue Ishimwe,
+* Oluwatomi Joshua Thompson
+* Nyayath Lual Deng
+* Nshuti Lydivine
+* Tiffany Lina Sangwa Turate
+* Prince Hugue Ishimwe
 
 BSc Software Engineering
 
@@ -522,23 +662,21 @@ African Leadership University
 
 This project was developed for academic purposes as part of the Foundations Project for the Bachelor of Science in Software Engineering at African Leadership University.
 
-You are free to use, modify, and improve this project for educational and research purposes.
+Free to use, modify, and improve for educational and research purposes.
 
 ---
 
-#  Acknowledgements
+# Acknowledgements
 
 Special thanks to:
 
-- African Leadership University
-- Rwanda Transport Stakeholders
-- Africa's Talking
-- OpenStreetMap
-- Leaflet.js
-- Node.js Community
-- Express.js Community
-- MySQL Community
+* African Leadership University
+* Rwanda Transport Stakeholders
+* Africa's Talking
+* OpenStreetMap
+* Leaflet.js
+* Node.js Community
+* Express.js Community
+* MySQL Community
 
----
-
-⭐ If you find this project useful, consider starring the repository on GitHub.
+⭐ If you find this project useful, consider starring the repository.
