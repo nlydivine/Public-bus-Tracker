@@ -618,6 +618,9 @@ screenshots
        
 <img width="523" height="814" alt="Screenshot 2026-07-26 183149" src="https://github.com/user-attachments/assets/dbf9af52-8be9-4b48-ade0-e6774f4e6eff" />
 
+<img width="523" height="814" alt="Screenshot 2026-07-19 183935" src="https://github.com/user-attachments/assets/f721e163-f5ba-45ab-857f-adfefcbc6d8d" />
+
+
 
 ---
 
